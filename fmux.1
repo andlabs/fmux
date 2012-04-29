@@ -37,6 +37,14 @@ presently requires all files to have the same size; it does this by checking aga
 returns 0 on success and nonzero on failure.
 .SH BUGS
 More constructive behavior if one file is shorter than the others could be done; the issue is that I do not know what the proper behavior is.
+.LP
+For the sake of low memory usage,
+.I fmux
+opens all files at once and reads them one byte at a time.
+This is both slow and might run into an open file limit if logs of files are being multiplexed.
+I could avoid these problems by reading one file at a time into a large buffer, but for significantly large files this won't do.
+Is there a better way?
+For my needs any approach would work.
 .SH AUTHOR
 Pietro Gagliardi (pietro10@mac.com)
 .SH LICENSES
