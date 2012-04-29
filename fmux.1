@@ -44,7 +44,11 @@ opens all files at once and reads them one byte at a time.
 This is both slow and might run into an open file limit if logs of files are being multiplexed.
 I could avoid these problems by reading one file at a time into a large buffer, but for significantly large files this won't do.
 Is there a better way?
-For my needs any approach would work.
+For my needs any approach would work, though I am seeing somewhat slow speeds...
+(running
+.I fmux
+on the same 256KB (exact) file 6 times gives me a consistent 2.5 second runtime...)
+And actually, would switching to using a buffer really make it faster?
 .SH AUTHOR
 Pietro Gagliardi (pietro10@mac.com)
 .SH LICENSES
