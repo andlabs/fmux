@@ -1,0 +1,49 @@
+.TH FMUX 1
+.\" 29 april 2011
+.SH NAME
+fmux \- combine files by alternating bytes
+.SH SYNOPSIS
+.B fmux
+[
+.B -o
+.I outfile
+]
+.I files...
+.SH DESCRIPTION
+.I Fmux
+reads consecutive bytes from
+.I files
+and writes them to
+.I outfile
+(default standard output) by writing one byte from each file before moving to the next byte.
+For instance,
+.IP
+.EX
+fmux a b
+.EE
+.LP
+writes the first byte of
+.BR a ,
+then the first byte of
+.BR b ,
+then the second byte of
+.BR a ,
+and so on.
+.LP
+.I Fmux
+presently requires all files to have the same size; it does this by checking against the size of the first file given on the command line.
+.LP
+.I Fmux
+returns 0 on success and nonzero on failure.
+.SH BUGS
+More constructive behavior if one file is shorter than the others could be done; the issue is that I do not know what the proper behavior is.
+.SH AUTHOR
+Pietro Gagliardi (pietro10@mac.com)
+.SH LICENSES
+.I Fmux
+is licensed under the MIT License (http://www.opensource.org/licenses/MIT), alternatively titled Expat License.
+.LP
+This manpage is licensed as so:
+.IP
+This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
