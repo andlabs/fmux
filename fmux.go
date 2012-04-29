@@ -9,6 +9,7 @@ import (
 	"log"
 	"flag"
 	"os"
+	"encoding/binary"
 )
 
 var infiles []*os.File
@@ -17,8 +18,22 @@ var outfile *os.File = os.Stdout
 var outfname *string = flag.String("o", "", "output file")
 
 // run:  the actual work
-func run() {
-	// TODO
+func run(fsize int64) {
+	var b byte
+	var err error
+
+	for j := int64(0); j < fsize; j++ {	// crash if I counted fsize down to zero?
+		for i := 0; i < len(infiles); i++ {
+			err = binary.Read(infiles[i], binary.BigEndian, &b)
+			if err != nil {
+				log.Fatalf("%s: read failed: %v\n", flag.Arg(i), err)
+			}
+			err = binary.Write(outfile, binary.BigEndian, b)
+			if err != nil {
+				log.Fatalf("%s: write failed: %v\n", *outfname, err)
+			}
+		}
+	}
 }
 
 // getsize:  get file size
@@ -49,6 +64,8 @@ func main() {
 			log.Fatalf("%s: create failed: %v\n", outfname, err)
 		}
 		defer outfile.Close()
+	} else {
+		*outfname = "<stdout>"	// for error reporting
 	}
 
 	first := flag.Arg(0)
@@ -69,5 +86,5 @@ func main() {
 	}
 
 	// now do the work
-	run()
+	run(fsize)
 }
