@@ -19,9 +19,31 @@ var outfname *string = flag.String("o", "", "output file")
 
 // run:  the actual work
 func run(fsize int64) {
-	var b byte
+//	var b byte
 	var err error
 
+	n := len(infiles)
+	fullbuf := make([]byte, fsize*int64(n))
+	filebuf := make([]byte, fsize)
+
+	for i := 0; i < n; i++ {
+		err = binary.Read(infiles[i], binary.BigEndian, &filebuf)
+		if err != nil {
+			log.Fatalf("%s: read failed: %v\n", flag.Arg(i), err)
+		}
+		j := int64(i)
+		for k := int64(0); k < fsize; k++ {
+			fullbuf[j] = filebuf[k]
+			j += int64(n)
+		}
+	}
+
+	err = binary.Write(outfile, binary.BigEndian, fullbuf)
+	if err != nil {
+		log.Fatalf("%s: write failed: %v\n", outfname, err)
+	}
+
+/*
 	for j := int64(0); j < fsize; j++ {	// crash if I counted fsize down to zero?
 		for i := 0; i < len(infiles); i++ {
 			err = binary.Read(infiles[i], binary.BigEndian, &b)
@@ -34,6 +56,7 @@ func run(fsize int64) {
 			}
 		}
 	}
+*/
 }
 
 // getsize:  get file size
