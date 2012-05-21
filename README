@@ -1,0 +1,55 @@
+FMUX(1)                                                                FMUX(1)
+
+
+
+NAME
+       fmux - combine files by alternating bytes
+
+SYNOPSIS
+       fmux [ -o outfile ] files...
+
+DESCRIPTION
+       Fmux  reads  consecutive  bytes  from  files and writes them to outfile
+       (default standard output) by writing one byte  from  each  file  before
+       moving to the next byte.  For instance,
+
+              fmux a b
+
+       writes  the  first byte of a, then the first byte of b, then the second
+       byte of a, and so on.
+
+       Fmux presently requires all files to have the same size; it  does  this
+       by  checking  against  the  size of the first file given on the command
+       line.
+
+       Fmux returns 0 on success and nonzero on failure.
+
+BUGS
+       More constructive behavior if one file is shorter than the others could
+       be done; the issue is that I do not know what the proper behavior is.
+
+       For  the sake of low speed, fmux opens all files at once, reads them in
+       one at a time, and copies them into a larger buffer.   This  uses  much
+       memory; I have to try using smaller buffers.
+
+AUTHOR
+       Pietro Gagliardi (pietro10@mac.com)
+
+THANKS
+       David Korth (GerbilSoft) for some optimization suggestions.
+
+LICENSES
+       Fmux    is   licensed   under   the   MIT   License   (http://www.open‐
+       source.org/licenses/MIT), alternatively titled Expat License.
+
+       This manpage is licensed as so:
+
+              This work is licensed under the Creative Commons Attribution 3.0
+              Unported  License.   To  view  a  copy  of  this  license, visit
+              http://creativecommons.org/licenses/by/3.0/ or send a letter  to
+              Creative  Commons,  444 Castro Street, Suite 900, Mountain View,
+              California, 94041, USA.
+
+
+
+                                                                       FMUX(1)
