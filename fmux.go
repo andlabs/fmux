@@ -70,7 +70,6 @@ func getsize(name string) int64 {
 	return info.Size()
 }
 
-// setup:  handle command line and open files
 func main() {
 	var err error
 
