@@ -38,19 +38,14 @@ returns 0 on success and nonzero on failure.
 .SH BUGS
 More constructive behavior if one file is shorter than the others could be done; the issue is that I do not know what the proper behavior is.
 .LP
-For the sake of low memory usage,
+For the sake of low speed,
 .I fmux
-opens all files at once and reads them one byte at a time.
-This is both slow and might run into an open file limit if logs of files are being multiplexed.
-I could avoid these problems by reading one file at a time into a large buffer, but for significantly large files this won't do.
-Is there a better way?
-For my needs any approach would work, though I am seeing somewhat slow speeds...
-(running
-.I fmux
-on the same 256KB (exact) file 6 times gives me a consistent 2.5 second runtime...)
-And actually, would switching to using a buffer really make it faster?
+opens all files at once, reads them in one at a time, and copies them into a larger buffer.
+This uses much memory; I have to try using smaller buffers.
 .SH AUTHOR
 Pietro Gagliardi (pietro10@mac.com)
+.SH THANKS
+David Korth (GerbilSoft) for some optimization suggestions.
 .SH LICENSES
 .I Fmux
 is licensed under the MIT License (http://www.opensource.org/licenses/MIT), alternatively titled Expat License.

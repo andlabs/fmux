@@ -1,4 +1,6 @@
 // fmux:  file multiplexer
+// pietro gagliardi
+// licensed under the MIT license/Expat license (http://www.opensource.org/licenses/MIT)
 package main
 
 // TODO: really use flag? there's only one option
